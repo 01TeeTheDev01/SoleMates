@@ -1,0 +1,6 @@
+services:
+  solemates:
+    image: ${DOCKER_REGISTRY-}solemateswa
+    build:
+      context: .
+      dockerfile: src/WA/SoleMatesWA/Dockerfile

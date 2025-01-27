@@ -76,7 +76,15 @@ h1, h2 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: all .5s ease-in-out;
 }
+
+.card:hover {
+    cursor: pointer;
+    border: 1px solid #8D477C; /* Optional: Add a border on hover */
+    box-shadow: 0 0 50px #8D477C; /* Glowing effect with your color */
+}
+
 
 .card-body {
     display: flex;
@@ -132,21 +140,21 @@ h1, h2 {
     margin-bottom: 40px;
 }
 
-    .testimonials .testimonial-box {
-        border-color: #8D477C;
-        color: #333;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 30px;
-        height: 350px; /* Uniform height for all testimonial boxes */
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        text-align: center;
-        overflow: hidden;
-    }
+.testimonials .testimonial-box {
+    border-color: #8D477C;
+    color: #333;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    height: 350px; /* Uniform height for all testimonial boxes */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+}
 
 .testimonials .testimonial-box p {
     font-size: 1.25rem;
@@ -189,7 +197,7 @@ h1, h2 {
 }
 
 .contact .btn-custom {
-    background-color: white;
+    background-color: transparent;
     color: #8D477C;
     padding: 15px 30px;
     font-size: 1.25rem;
@@ -309,4 +317,18 @@ h1, h2 {
 
 .card-footer {
     background-color: transparent;
+}
+
+.para-size {
+    font-size: 12rem;
+}
+
+.nav-item {
+    transition: all .5s ease-in-out;
+}
+
+.nav-item:hover {
+    background-color: #000000;
+    color: #8D477C;
+    border-radius: 5px;
 }

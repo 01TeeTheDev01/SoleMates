@@ -37,28 +37,43 @@
 <body>
     <header>
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container d-flex justify-content-between align-items-center">
                 <!-- Logo -->
                 <a class="navbar-brand text-white fw-bold" asp-action="Index">
                     <img src="~/images/logo.jpg" width="50px" height="50px" />
                 </a>
 
-                <!-- Centered Brand Name -->
-                <div class="mx-auto text-white text-center" style="font-family: 'Cursive', sans-serif; font-size: 1.5rem;">
-                    Sole Mates
-                </div>
+                <!-- Hamburger Button for Mobile Screens -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
                 <!-- Right Navigation Links -->
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div id="navbarNav" class="collapse navbar-collapse text-uppercase fw-bold justify-content-center">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link text-white" href="#services">Services</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" style="font-size: 1rem;" asp-action="Events">
+                                <i class="fas fa-calendar"></i>
+                                Events
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" style="font-size: 1rem;" asp-action="Gallery">
+                                <i class="fas fa-camera"></i>
+                                Gallery
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" style="font-size: 1rem;" asp-action="About">
+                                <i class="fas fa-info-circle"></i>
+                                About
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
-
-
     </header>
 
     <div class="content-wrapper">
@@ -69,17 +84,15 @@
         </div>
     </div>
 
-    <footer>
-        <footer style="background-color: #8D477C; padding: 20px 0; text-align: center; font-size: 14px;" class="text-light">
+    <footer >
+        <footer class="navbar-dark bg-dark" style="background-color: #8D477C; padding: 20px 0; text-align: center; font-size: 14px;" class="text-light">
             <div>
                 <p>&copy; 2025 SoleMates. All Rights Reserved.</p>
                 <p>
-                    <a asp-action="Privacy" class="text-light" style="text-decoration: none; margin-right: 20px;">Privacy Policy</a>
                     <a asp-action="Privacy" class="text-light" asp-fragment="Test" style="text-decoration: none;">Terms of Service</a>
                 </p>
             </div>
             <div>
-                <p>Follow Us:</p>
                 <a href="https://facebook.com/solemates" style="text-decoration: none; margin-right: 10px;" target="_blank">
                     <i class="fab fa-facebook text-light" style="margin-right: 5px;"></i> <span class="text-light">Facebook</span>
                 </a>
