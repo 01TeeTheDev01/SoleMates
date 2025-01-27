@@ -27,6 +27,9 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
+    - name: Clean
+      run: dotnet clean
+
     - name: Publish
       run: |
         dotnet publish src/WA/SoleMatesWA/SoleMatesWA.csproj --configuration Release --output ./publish --no-build --verbosity normal
