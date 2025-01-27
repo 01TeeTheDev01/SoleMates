@@ -32,4 +32,4 @@ jobs:
 
     - name: Publish
       run: |
-        dotnet publish src/WA/SoleMatesWA/SoleMatesWA.csproj --configuration Release --output ./publish --no-build --verbosity normal
+        dotnet publish src/WA/SoleMatesWA/SoleMatesWA.csproj --configuration Release --output ./publish --verbosity normal
