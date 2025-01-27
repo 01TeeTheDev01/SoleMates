@@ -1,0 +1,237 @@
+﻿@{
+    ViewData["Title"] = "Events";
+    string[] videos = ViewData["Videos"] as string[] ?? new string[0];
+}
+
+<!-- Image Carousel Section -->
+<section id="image-carousel" class="carousel slide mt-0" data-bs-ride="carousel" role="region" aria-label="Image Carousel">
+    <div class="container">
+        <div class="carousel-inner">
+            <!-- Carousel Item 1 -->
+            <div class="carousel-item active">
+                <img src="~/images/alex-perez-9E7vEfAcMDw-unsplash.jpg" class="d-block w-100 carousel-image" alt="Sneaker Image 1 - A close-up of a pair of sneakers on a city street">
+            </div>
+            <!-- Carousel Item 2 -->
+            <div class="carousel-item">
+                <img src="~/images/dickens-sikazwe-4ZzxFklU55s-unsplash.jpg" class="d-block w-100 carousel-image" alt="Sneaker Image 2 - A pair of sneakers displayed against an artistic background">
+            </div>
+            <!-- Add more carousel items as needed -->
+        </div>
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#image-carousel" data-bs-slide="prev" aria-label="Previous slide">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#image-carousel" data-bs-slide="next" aria-label="Next slide">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+
+<!-- Hero Section with Parallax Effect -->
+<section class="hero" style="background-image: url('~/images/alex-perez-9E7vEfAcMDw-unsplash.jpg'); background-size: cover; background-position: center; background-attachment: fixed; color: white; padding: 100px 0;">
+    <div class="container text-center" style="color: #8D477C;">
+        <h1 class="fw-bold display-3 animated fadeInUp" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); font-size: 2.5rem;">Step Into the Spotlight</h1>
+        <p class="lead animated fadeInUp delay-1s text-white-50" style="text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); font-size: 1rem;">
+            Join us at SoleMates events, where sneaker culture meets community, passion, and unforgettable experiences.
+        </p>
+    </div>
+</section>
+
+<!-- Event Highlights Section -->
+<h2 class="fw-bold mb-4 text-center" style="font-size: 1.8rem;">Event Highlights</h2>
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            @foreach (var video in videos)
+            {
+                <div class="col-md-3 col-lg-3">
+                    <div class="card bg-dark shadow-lg h-100">
+                        <!-- Video Container -->
+                        <div class="ratio ratio-16x9">
+                            <video controls class="rounded-top w-100" aria-label="Video showcasing the event">
+                                <source src="~/videos/@video" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <!-- Card Footer -->
+                        <div class="card-footer text-center bg-white">
+                            <h6 class="card-title fw-bold mb-0" style="font-size: 1rem;">Sneaker Expo 2024</h6>
+                            <small class="text-muted">Relive the action</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Events Calendar Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-4 text-center" style="font-size: 1.8rem;">Upcoming Events</h2>
+        <div id="events-calendar" class="rounded shadow p-4">
+            <!-- Event List -->
+            <div class="row g-4">
+                <!-- Event 1 - February -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="card bg-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold" style="color: #8D477C; font-size: 1rem;">Sneaker Expo 2025</h5>
+                            <p class="card-text" style="font-size: 0.9rem; margin-bottom: 10px;">Join us for the biggest sneaker event of the year. Showcase your kicks, connect with fellow enthusiasts, and celebrate sneaker culture.</p>
+                            <div class="d-flex flex-column align-items-start">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-calendar-event" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">February 20, 2025</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-geo-alt" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">The Sneaker Hub, 123 Sneaker St.</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-house-door" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">Downtown Conference Center</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-clock" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">10:00 AM - 4:00 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 2 - March -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="card bg-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold" style="color: #8D477C; font-size: 1rem;">SoleMates Sneaker Meet-up</h5>
+                            <p class="card-text" style="font-size: 0.9rem; margin-bottom: 10px;">A casual meet-up to talk about all things sneakers. Whether you're a collector, enthusiast, or just curious, join us for a fun-filled day!</p>
+                            <div class="d-flex flex-column align-items-start">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-calendar-event" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">March 15, 2025</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-geo-alt" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">City Park, Block A</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-house-door" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">Outdoor Pavilion</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-clock" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">12:00 PM - 5:00 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 3 - April -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="card bg-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold" style="color: #8D477C; font-size: 1rem;">SoleMates Workshop</h5>
+                            <p class="card-text" style="font-size: 0.9rem; margin-bottom: 10px;">Learn how to clean, restore, and maintain your sneakers. Our experts will guide you through the process to keep your kicks looking fresh!</p>
+                            <div class="d-flex flex-column align-items-start">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-calendar-event" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">April 12, 2025</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-geo-alt" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">SneakerWorks Studio</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-house-door" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">Workshop Room A</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-clock" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">1:00 PM - 3:00 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 4 - May -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="card bg-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold" style="color: #8D477C; font-size: 1rem;">Sneaker Art Showcase</h5>
+                            <p class="card-text" style="font-size: 0.9rem; margin-bottom: 10px;">Explore the intersection of sneaker culture and art at our Sneaker Art Showcase. Local artists will display their sneaker-inspired masterpieces.</p>
+                            <div class="d-flex flex-column align-items-start">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-calendar-event" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">May 5, 2025</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-geo-alt" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">Art District, Gallery 9</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-house-door" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">The Sneaker Art Gallery</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-clock" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">6:00 PM - 9:00 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 5 - June -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="card bg-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold" style="color: #8D477C; font-size: 1rem;">SoleMates Annual Sneaker Ball</h5>
+                            <p class="card-text" style="font-size: 0.9rem; margin-bottom: 10px;">Dress up in your finest and showcase your best sneakers at our annual Sneaker Ball. An evening of glitz, glam, and great vibes!</p>
+                            <div class="d-flex flex-column align-items-start">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-calendar-event" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">June 20, 2025</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-geo-alt" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">Grand Ballroom, 456 Elite Rd.</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-house-door" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">The Diamond Ballroom</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-clock" style="font-size: 1.2rem;"></i>
+                                    <span style="font-size: 0.9rem; margin-left: 8px;">7:00 PM - Midnight</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Newsletter Section -->
+<section class="py-5 bg-dark text-white">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-4" style="font-size: 1.8rem;">Stay Updated</h2>
+        <p class="lead" style="font-size: 1rem;">Never miss an event! Sign up for our newsletter.</p>
+        <form class="row g-2 justify-content-center" action="/subscribe" method="post">
+            <div class="col-md-6">
+                <input type="email" class="form-control" placeholder="Enter your email" required aria-label="Email for newsletter subscription">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-custom w-100">Subscribe</button>
+            </div>
+        </form>
+    </div>
+</section>
