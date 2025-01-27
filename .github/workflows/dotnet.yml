@@ -32,4 +32,4 @@ jobs:
     - name: List files in the project directory
       run: ls -R
     - name: Run
-      run: dotnet run --no-build --verbosity normal --project SoleMates/src/WA/SoleMates/SoleMates.csproj
+      run: dotnet run --no-build --verbosity normal --project src/WA/SoleMatesWA/SoleMatesWA.csproj
