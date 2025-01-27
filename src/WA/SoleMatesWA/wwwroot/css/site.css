@@ -1,0 +1,291 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Hero Section */
+.hero {
+    background-image: url('/path/to/your/image.jpg');
+    background-size: cover;
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+}
+
+    .hero h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        animation: fadeInUp 1s ease-in-out;
+    }
+
+    .hero p {
+        font-size: 1.25rem;
+        animation: fadeInUp 1s ease-in-out 1s;
+    }
+
+    .hero .btn-custom {
+        background-color: #8D477C;
+        color: white;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        animation: fadeInUp 1s ease-in-out 2s;
+    }
+
+/* About Section */
+.about {
+    text-align: center;
+    padding: 60px 0;
+}
+
+    .about h2 {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+    }
+
+    .about p {
+        font-size: 1.25rem;
+        margin-bottom: 20px;
+    }
+
+/* Services Section */
+.services {
+    color: white;
+    padding: 60px 0;
+}
+
+    .services h2 {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+    }
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.card-title {
+    font-size: 1.75rem; /* Ensure uniform card title size */
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+.card-text {
+    font-size: 1rem; /* Standardize text size */
+    margin-bottom: 20px;
+    color: #333; /* Slightly darker text for better readability */
+}
+
+.feature-icon {
+    font-size: 50px; /* Larger icons for better visual appeal */
+    margin-bottom: 20px;
+}
+
+.btn {
+    margin-top: auto;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.btn-outline-primary, .btn-outline-success, .btn-outline-danger {
+    font-weight: 600;
+}
+
+/* Ensure uniform card height and centering */
+.col-md-4 {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+/* Testimonials Section */
+.testimonials {
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+}
+
+    .testimonials h2 {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+    }
+
+    .testimonials .testimonial-box {
+        color: #333;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        height: 350px; /* Uniform height for all testimonial boxes */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        overflow: hidden;
+    }
+
+        .testimonials .testimonial-box p {
+            font-size: 1.25rem;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+/* Updated Styling for Larger Testimonial Images */
+.testimonial-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #ff6347;
+    margin-bottom: 20px;
+}
+
+/* Flexbox alignment in each column */
+.testimonials .col-md-4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contact Section */
+.contact {
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+}
+
+    .contact h2 {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+    }
+
+    .contact p {
+        font-size: 1.25rem;
+        margin-bottom: 20px;
+    }
+
+    .contact .btn-custom {
+        background-color: white;
+        color: #ff6347;
+        padding: 15px 30px;
+        font-size: 1.25rem;
+        border: none;
+        border-radius: 5px;
+    }
+
+/* Navbar */
+.navbar {
+    background-color: #8D477C;
+}
+
+    .navbar .navbar-brand {
+        color: white;
+    }
+
+    .navbar .navbar-nav .nav-link {
+        color: white;
+    }
+
+        .navbar .navbar-nav .nav-link:hover {
+            color: #ff6347;
+        }
+
+/* Footer */
+.footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+    .footer a {
+        color: #ff6347;
+        text-decoration: none;
+    }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+/* Utility Classes */
+.text-white {
+    color: white !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-primary {
+    color: #ff6347 !important;
+}
+
+.text-dark {
+    color: #343a40 !important;
+}
+
+.bg-dark {
+    background-color: #343a40 !important;
+}
+
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.btn-custom {
+    /* background-color: #ff6347; */
+    /* color: #8D477C; */
+}
+
+.shadow {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Styles */
+@media (max-width: 767px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .services .card {
+        flex-basis: 100%; /* Stack cards on smaller screens */
+    }
+
+    .services .btn-outline-primary,
+    .services .btn-outline-success,
+    .services .btn-outline-danger {
+        width: 100%;
+    }
+
+    .testimonial-box {
+        height: auto;
+    }
+}
+
+/* Ensure all images are the same size */
+.carousel-image {
+    height: 400px; /* Set a fixed height */
+    object-fit: cover; /* Maintain aspect ratio without distortion */
+}
