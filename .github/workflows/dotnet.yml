@@ -19,16 +19,16 @@ jobs:
         dotnet-version: 8.0.x
     
     - name: Clean
-      run: dotnet clean
+      run: dotnet clean src/WA/SoleMatesWA/SoleMatesWA.csproj
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore src/WA/SoleMatesWA/SoleMatesWA.csproj
 
     - name: Build
-      run: dotnet build
+      run: dotnet build src/WA/SoleMatesWA/SoleMatesWA.csproj
 
     - name: Test
-      run: dotnet test --no-build
+      run: dotnet test src/WA/SoleMatesWA/SoleMatesWA.csproj --no-build
 
     - name: Publish
       run: |
