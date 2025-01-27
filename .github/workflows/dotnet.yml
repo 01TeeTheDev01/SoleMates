@@ -29,5 +29,7 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: List files in the project directory
+      run: ls -R
     - name: Run
       run: dotnet run --no-build --verbosity normal --project SoleMates/src/WA/SoleMates/SoleMates.csproj
