@@ -241,14 +241,14 @@ h1, h2 {
     position: relative;
 }
 
-.footer a {
-    color: #ff6347;
-    text-decoration: none;
-}
+    .footer a {
+        color: #ff6347;
+        text-decoration: none;
+    }
 
-.footer a:hover {
-    text-decoration: underline;
-}
+        .footer a:hover {
+            text-decoration: underline;
+        }
 
 /* Utility Classes */
 .text-white {
@@ -323,7 +323,7 @@ h1, h2 {
     font-size: 12rem;
 }
 
-.bav-link {
+.nav-link {
     color: white;
 }
 
@@ -331,10 +331,9 @@ h1, h2 {
     transition: all .5s ease-in-out;
 }
 
-.nav-item:hover {
-    background-color: black;
-    border-radius: 5px;
-}
+    .nav-item:hover {
+        border-radius: 5px;
+    }
 
 .card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -355,13 +354,41 @@ h1, h2 {
     transition: transform 0.3s ease;
 }
 
-.card-img-top:hover {
-    transform: scale(1.05);
-}
+    .card-img-top:hover {
+        transform: scale(1.05);
+    }
 
 /* Mobile Optimization */
 @media (max-width: 767px) {
     .hero {
         background-attachment: unset;
     }
+}
+
+/*Comment section*/
+#comment-list {
+    max-height: 200px;
+    overflow-y: auto;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#comment-form input, #comment-form textarea {
+    border-radius: 5px;
+}
+
+.btn-custom {
+    background-color: #8D477C;
+    color: white;
+}
+
+.form-control {
+    border: none;
+}
+
+.placeholder-light {
+    background-color: #000; /* Black background for the input field */
+    color: #fff; /* White text for the user input */
+    border: 1px solid #8D477C; /* Add a border for better visibility */
 }

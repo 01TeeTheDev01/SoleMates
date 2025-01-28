@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Events";
     string[] videos = ViewData["Videos"] as string[] ?? new string[0];
+    IEnumerable<EventModel> events = ViewData["Events"] as IEnumerable<EventModel> ?? new List<EventModel>();
+    IEnumerable<CommentModel> comments = ViewData["Comments"] as IEnumerable<CommentModel> ?? new List<CommentModel>();
 }
 
 <!-- Image Carousel Section -->
@@ -71,166 +73,165 @@
 <section class="py-5">
     <div class="container">
         <h2 class="fw-bold mb-4 text-center" style="font-size: 1.8rem;">Upcoming Events</h2>
-        <div id="events-calendar" class="rounded shadow p-4">
-            <!-- Event List -->
-            <div class="row g-4">
-                <!-- Event 1 - February -->
-                <div class="col-md-4 col-sm-6">
-                    <div class="card bg-light shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold" style="color: #8D477C; font-size: 1rem;">Sneaker Expo 2025</h5>
-                            <p class="card-text" style="font-size: 0.9rem; margin-bottom: 10px;">Join us for the biggest sneaker event of the year. Showcase your kicks, connect with fellow enthusiasts, and celebrate sneaker culture.</p>
-                            <div class="d-flex flex-column align-items-start">
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-calendar-event" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">February 20, 2025</span>
-                                </div>
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-geo-alt" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">The Sneaker Hub, 123 Sneaker St.</span>
-                                </div>
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-house-door" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">Downtown Conference Center</span>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <i class="bi bi-clock" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">10:00 AM - 4:00 PM</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Event 2 - March -->
-                <div class="col-md-4 col-sm-6">
-                    <div class="card bg-light shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold" style="color: #8D477C; font-size: 1rem;">SoleMates Sneaker Meet-up</h5>
-                            <p class="card-text" style="font-size: 0.9rem; margin-bottom: 10px;">A casual meet-up to talk about all things sneakers. Whether you're a collector, enthusiast, or just curious, join us for a fun-filled day!</p>
-                            <div class="d-flex flex-column align-items-start">
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-calendar-event" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">March 15, 2025</span>
-                                </div>
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-geo-alt" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">City Park, Block A</span>
-                                </div>
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-house-door" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">Outdoor Pavilion</span>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <i class="bi bi-clock" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">12:00 PM - 5:00 PM</span>
+        @if (events.Any())
+        {
+            <div id="events-calendar" class="rounded shadow p-4">
+                <!-- Event List -->
+                <div class="row g-4">
+                    @foreach (var currentEvent in events)
+                    {
+                        <!-- Event Card -->
+                        <div class="col-md-3 col-sm-6">
+                            <div id="eventCard"
+                            class="card bg-light shadow-sm h-100"
+                            role="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#eventModal"
+                            data-title="@currentEvent.Title"
+                            data-description="@currentEvent.Description"
+                            data-date="@currentEvent.Date.ToLongDateString()"
+                            data-location="@currentEvent.Location"
+                            data-venue="@currentEvent.Venue"
+                            data-start="@($"{DateTime.Today.Add(currentEvent.StartTime):HH:mm}")"
+                            data-end="@($"{DateTime.Today.Add(currentEvent.EndTime):HH:mm}")"
+                            onclick="openEventPreview(this)">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title fw-bold" style="color: #8D477C; font-size: 1rem;">@currentEvent.Title</h5>
+                                    <!-- Truncated description -->
+                                    <p class="card-text flex-grow-1 text-truncate" style="font-size: 0.9rem; margin-bottom: 10px; max-height: 4.5rem; overflow: hidden; text-overflow: ellipsis;">
+                                        @currentEvent.Description
+                                    </p>
+                                    <div class="d-flex flex-column align-items-start">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <i class="bi bi-calendar-event" style="font-size: 1.2rem;"></i>
+                                            <span style="font-size: 0.9rem; margin-left: 8px;">@currentEvent.Date.ToLongDateString()</span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <i class="bi bi-geo-alt" style="font-size: 1.2rem;"></i>
+                                            <span style="font-size: 0.9rem; margin-left: 8px;">@currentEvent.Location</span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <i class="bi bi-house-door" style="font-size: 1.2rem;"></i>
+                                            <span style="font-size: 0.9rem; margin-left: 8px;">@currentEvent.Venue</span>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-clock" style="font-size: 1.2rem;"></i>
+                                            <span style="font-size: 0.9rem; margin-left: 8px;">
+                                                @($"{DateTime.Today.Add(currentEvent.StartTime):HH:mm} - {DateTime.Today.Add(currentEvent.EndTime):HH:mm}")
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
 
-                <!-- Event 3 - April -->
-                <div class="col-md-4 col-sm-6">
-                    <div class="card bg-light shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold" style="color: #8D477C; font-size: 1rem;">SoleMates Workshop</h5>
-                            <p class="card-text" style="font-size: 0.9rem; margin-bottom: 10px;">Learn how to clean, restore, and maintain your sneakers. Our experts will guide you through the process to keep your kicks looking fresh!</p>
-                            <div class="d-flex flex-column align-items-start">
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-calendar-event" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">April 12, 2025</span>
-                                </div>
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-geo-alt" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">SneakerWorks Studio</span>
-                                </div>
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-house-door" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">Workshop Room A</span>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <i class="bi bi-clock" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">1:00 PM - 3:00 PM</span>
-                                </div>
+                <!-- Modal for Event Preview -->
+                <div id="eventModal"
+                class="modal fade"
+                tabindex="-1"
+                aria-labelledby="eventModalLabel"
+                aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 id="eventModalLabel" class="modal-title fw-bold" style="color: #8D477C;">Host</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Event 4 - May -->
-                <div class="col-md-4 col-sm-6">
-                    <div class="card bg-light shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold" style="color: #8D477C; font-size: 1rem;">Sneaker Art Showcase</h5>
-                            <p class="card-text" style="font-size: 0.9rem; margin-bottom: 10px;">Explore the intersection of sneaker culture and art at our Sneaker Art Showcase. Local artists will display their sneaker-inspired masterpieces.</p>
-                            <div class="d-flex flex-column align-items-start">
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-calendar-event" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">May 5, 2025</span>
-                                </div>
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-geo-alt" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">Art District, Gallery 9</span>
-                                </div>
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-house-door" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">The Sneaker Art Gallery</span>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <i class="bi bi-clock" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">6:00 PM - 9:00 PM</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Event 5 - June -->
-                <div class="col-md-4 col-sm-6">
-                    <div class="card bg-light shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold" style="color: #8D477C; font-size: 1rem;">SoleMates Annual Sneaker Ball</h5>
-                            <p class="card-text" style="font-size: 0.9rem; margin-bottom: 10px;">Dress up in your finest and showcase your best sneakers at our annual Sneaker Ball. An evening of glitz, glam, and great vibes!</p>
-                            <div class="d-flex flex-column align-items-start">
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-calendar-event" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">June 20, 2025</span>
-                                </div>
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-geo-alt" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">Grand Ballroom, 456 Elite Rd.</span>
-                                </div>
-                                <div class="d-flex align-items-center mb-2">
-                                    <i class="bi bi-house-door" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">The Diamond Ballroom</span>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <i class="bi bi-clock" style="font-size: 1.2rem;"></i>
-                                    <span style="font-size: 0.9rem; margin-left: 8px;">7:00 PM - Midnight</span>
+                            <div class="modal-body">
+                                <p id="eventDescription" class="mb-4 text-dark"></p>
+                                <div class="d-flex flex-column gap-2">
+                                    <div><i class="bi bi-calendar-event" style="color: #8D477C;"></i> <span id="eventDate" class="text-dark"></span></div>
+                                    <div><i class="bi bi-geo-alt" style="color: #8D477C;"></i> <span id="eventLocation" class="text-dark"></span></div>
+                                    <div><i class="bi bi-house-door" style="color: #8D477C;"></i> <span id="eventVenue" class="text-dark"></span></div>
+                                    <div><i class="bi bi-clock" style="color: #8D477C;"></i> <span id="eventTime" class="text-dark"></span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="text-center mt-5">
+                <i class="bi bi-calendar-x" style="font-size: 2.5rem; color: #8D477C;"></i>
+                <p class="mt-3" style="font-size: 1.2rem; color: #6c757d;">No events are currently scheduled. Check back soon!</p>
+            </div>
+        }
     </div>
 </section>
 
+<!-- Comment Section -->
+<div class="mt-5">
+    <h5 class="fw-bold text-center" style="font-size: 1.8rem; color: #8D477C;">Comments</h5>
 
+    <!-- Comments List -->
+    <div id="comment-list" class="rounded p-3 bg-black text-white" style="max-height: 800px; overflow-y: auto;">
+        @if (comments is not null && comments.Any())
+        {
+            @foreach (var comment in comments)
+            {
+                <div class="comment mb-3 p-2 rounded" style="background-color: black;">
+                    <h6 class="fw-bold" style="color: #8D477C; font-size: 1.2rem;">&#64;@comment.User</h6>
+                    <p class="mb-1 fw-bold"><i class="bi bi-megaphone" style="color: #8D477C;"></i> @comment.Event.Title</p>
+                    <p class="mb-1"><i class="fas fa-message" style="color: #8D477C;"></i> @comment.Comment</p>
+                    <p class="mb-1">
+                        <small class="text-white-50"><i class="bi bi-calendar" style="color: #8D477C;"></i> @comment.Date.ToLongDateString()</small>
+                    </p>
+                    <p class="mb-1">
+                        <small class="text-white-50"><i class="bi bi-clock" style="color: #8D477C;"></i> @DateTime.Today.Add(comment.Time).ToString("hh:mm tt")</small>
+                    </p>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-white-50 text-center">No comments yet. Be the first to share your thoughts!</p>
+        }
+    </div>
+
+    <!-- Add Comment Form -->
+    <form id="comment-form" asp-action="AddComment" method="post" class="mt-4">
+        <div class="mb-3">
+            <input id="userName" name="userName" type="text" class="form-control bg-light text-black"
+                   placeholder="Your Name" required>
+        </div>
+        <div class="mb-3">
+            <textarea id="commentText" name="commentText" class="form-control bg-light text-black"
+                      rows="5" placeholder="Write a comment..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-custom text-center w-100">Post Comment</button>
+    </form>
+</div>
 
 <!-- Newsletter Section -->
-<section class="py-5 bg-dark text-white">
-    <div class="container text-center">
-        <h2 class="fw-bold mb-4" style="font-size: 1.8rem;">Stay Updated</h2>
-        <p class="lead" style="font-size: 1rem;">Never miss an event! Sign up for our newsletter.</p>
-        <form class="row g-2 justify-content-center" action="/subscribe" method="post">
-            <div class="col-md-6">
-                <input type="email" class="form-control" placeholder="Enter your email" required aria-label="Email for newsletter subscription">
+<section class="mt-4 py-5 bg-dark text-white">
+    <div class="container">
+        <!-- Header Section -->
+        <div class="text-center mb-4">
+            <h2 class="fw-bold" style="font-size: 2rem;">Stay Updated</h2>
+            <p class="lead" style="font-size: 1.1rem;">
+                Never miss an event! Sign up for our newsletter.
+            </p>
+        </div>
+
+        <!-- Form Section -->
+        <form class="row g-3 justify-content-center align-items-center" asp-action="AddComment" method="post">
+            <!-- Email Input -->
+            <div class="col-12 col-md-6">
+                <input type="email"
+                       class="form-control form-control-lg placeholder-light bg-light"
+                       placeholder="Enter your email"
+                       required
+                       aria-label="Email for newsletter subscription">
             </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-custom w-100">Subscribe</button>
+            <!-- Submit Button -->
+            <div class="col-12 col-md-2">
+                <button type="submit" class="btn btn-custom w-100">
+                    Subscribe
+                </button>
             </div>
         </form>
     </div>

@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+
+using SoleMatesWA.Data;
+using SoleMatesWA.Repository;
+
 namespace SoleMatesWA;
 
 public class Program
@@ -8,6 +13,20 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+
+        builder.Services.AddDbContext<SoleMatesWAContext>(options =>
+        {
+            string? connection = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("No connection string found.");
+
+            options
+            .UseNpgsql(connection)
+            .EnableThreadSafetyChecks()
+            .EnableDetailedErrors();
+        });
+
+        // Add the repository
+        builder.Services.AddScoped<IEventRepository, EventRepository>();
+        builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
         var app = builder.Build();
 
