@@ -4,6 +4,7 @@ const smallScreenWidth = 576;
 // Get the current viewport width
 const viewportWidth = window.innerWidth;
 
+/*
 document.addEventListener('DOMContentLoaded', () => {
     // Check if the screen width is small or equal to the threshold
     if (viewportWidth <= smallScreenWidth) {
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("This site is best viewed on a laptop/desktop.");
     }
 });
+*/
 
 //Image preview in Gallery
 document.addEventListener('DOMContentLoaded', () => {
