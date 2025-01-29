@@ -2,7 +2,7 @@
 
 namespace SoleMatesWA.Repository;
 
-public interface IEventRepository
+public interface IEventService
 {
     Task<IEnumerable<EventModel>> GetEventsAsync();
     Task<EventModel?> GetEventAsync(Guid id);

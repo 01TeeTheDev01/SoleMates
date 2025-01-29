@@ -2,7 +2,7 @@
 
 namespace SoleMatesWA.Repository;
 
-public interface ICommentRepository
+public interface ICommentService
 {
     Task<IEnumerable<CommentModel>> GetAllCommentsAsync();
     Task<IEnumerable<CommentModel>> GetCommentsAsync(Guid eventId);

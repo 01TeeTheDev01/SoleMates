@@ -5,12 +5,12 @@ using SoleMatesWA.Models;
 
 namespace SoleMatesWA.Repository;
 
-public class EventRepository : IEventRepository
+public class EventService : IEventService
 {
     private readonly SoleMatesWAContext _context;
-    private readonly ILogger<EventRepository> _logger;
+    private readonly ILogger<EventService> _logger;
 
-    public EventRepository(SoleMatesWAContext context, ILogger<EventRepository> logger)
+    public EventService(SoleMatesWAContext context, ILogger<EventService> logger)
     {
         _context = context;
         _logger = logger;

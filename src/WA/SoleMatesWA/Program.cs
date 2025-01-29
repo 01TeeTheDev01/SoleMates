@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 using SoleMatesWA.Data;
 using SoleMatesWA.Repository;
+using SoleMatesWA.Services;
 
 namespace SoleMatesWA;
 
@@ -25,8 +26,9 @@ public class Program
         });
 
         // Add the repository
-        builder.Services.AddScoped<IEventRepository, EventRepository>();
-        builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+        builder.Services.AddScoped<IEventService, EventService>();
+        builder.Services.AddScoped<ICommentService, CommentService>();
+        builder.Services.AddScoped<IMediaService, MediaHelper>();
 
         var app = builder.Build();
 

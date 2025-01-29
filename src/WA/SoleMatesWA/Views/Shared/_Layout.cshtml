@@ -175,7 +175,14 @@
             <div>
                 <p>&copy; 2025 SoleMates. All Rights Reserved.</p>
                 <p>
-                    <a asp-action="Privacy" class="text-light" asp-fragment="Test" style="text-decoration: none;" aria-label="View Terms of Service">Terms of Service</a>
+                    <a 
+                        asp-action="TermsOfService" 
+                        class="text-light text-decoration-none" 
+                        @*asp-fragment="Test"*@ 
+                        style="text-decoration: none;" 
+                        aria-label="View Terms of Service">
+                        Terms of Service
+                    </a>
                 </p>
             </div>
             <div>

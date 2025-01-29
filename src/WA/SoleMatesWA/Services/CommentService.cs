@@ -5,12 +5,12 @@ using SoleMatesWA.Models;
 
 namespace SoleMatesWA.Repository;
 
-public class CommentRepository : ICommentRepository
+public class CommentService : ICommentService
 {
     private readonly SoleMatesWAContext _context;
-    private readonly ILogger<CommentRepository> _logger;
+    private readonly ILogger<CommentService> _logger;
 
-    public CommentRepository(SoleMatesWAContext context, ILogger<CommentRepository> logger)
+    public CommentService(SoleMatesWAContext context, ILogger<CommentService> logger)
     {
         _context = context;
         _logger = logger;

@@ -1,39 +1,40 @@
 using System.Diagnostics;
-using System.Diagnostics.Tracing;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 using SoleMatesWA.Models;
 using SoleMatesWA.Repository;
-
-using static System.Net.Mime.MediaTypeNames;
+using SoleMatesWA.Services;
+using SoleMatesWA.Utils;
 
 namespace SoleMatesWA.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly IEventRepository _eventService;
-    private readonly ICommentRepository _commentSerivce;
+    private readonly IEventService _eventService;
+    private readonly ICommentService _commentSerivce;
+    private readonly IMediaService _mediaHelper;
 
-    public HomeController(ILogger<HomeController> logger, IEventRepository eventRepository, ICommentRepository commentRepository)
+    public HomeController(ILogger<HomeController> logger, IEventService eventRepository, ICommentService commentRepository, IMediaService mediaHelper)
     {
         _logger = logger;
         _eventService = eventRepository;
         _commentSerivce = commentRepository;
+        _mediaHelper = mediaHelper;
     }
 
     [Route("/")]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         try
         {
             if (HttpContext.Request.Path.HasValue &&
                 !string.IsNullOrEmpty(HttpContext.Request.Path.Value) &&
-                HttpContext.Request.Path.Value.Equals("/"))
+                HttpContext.Request.Path.Value.Equals("/") &&
+                HttpContext.Request.Method.Equals(HttpMethod.Get.Method))
             {
-                ViewData["CarouselImages"] = LoadCarouselImages();
+                ViewData["CarouselImages"] = await _mediaHelper.LoadCarouselMediaAsync();
                 HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
                 HttpContext.Response.StatusCode = StatusCodes.Status200OK;
                 return View();
@@ -42,7 +43,7 @@ public class HomeController : Controller
             {
                 HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
                 HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-                return BadRequest();
+                return BadRequest(StaticUtils.BAD_REQUEST_MESSAGE(HttpContext.Request.Path.Value ?? "Invalid Method"));
             }
         }
         catch (Exception ex)
@@ -54,15 +55,16 @@ public class HomeController : Controller
     }
 
     [Route("about")]
-    public IActionResult About()
+    public async Task<IActionResult> AboutAsync()
     {
         try
         {
             if (HttpContext.Request.Path.HasValue &&
                 !string.IsNullOrEmpty(HttpContext.Request.Path.Value) &&
-                HttpContext.Request.Path.Value.Equals("/about"))
+                HttpContext.Request.Path.Value.Equals("/about") &&
+                HttpContext.Request.Method.Equals(HttpMethod.Get.Method))
             {
-                ViewData["CarouselImages"] = LoadCarouselImages();
+                ViewData["CarouselImages"] = await _mediaHelper.LoadCarouselMediaAsync();
                 HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
                 HttpContext.Response.StatusCode = StatusCodes.Status200OK;
                 return View();
@@ -71,7 +73,7 @@ public class HomeController : Controller
             {
                 HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
                 HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-                return BadRequest();
+                return BadRequest(StaticUtils.BAD_REQUEST_MESSAGE(HttpContext.Request.Path.Value ?? "Invalid Method"));
             }
         }
         catch (Exception ex)
@@ -83,16 +85,17 @@ public class HomeController : Controller
     }
 
     [Route("gallery")]
-    public IActionResult Gallery()
+    public async Task<IActionResult> GalleryAsync()
     {
         try
         {
             if (HttpContext.Request.Path.HasValue &&
                 !string.IsNullOrEmpty(HttpContext.Request.Path.Value) &&
-                HttpContext.Request.Path.Value.Equals("/gallery"))
+                HttpContext.Request.Path.Value.Equals("/gallery") &&
+                HttpContext.Request.Method.Equals(HttpMethod.Get.Method))
             {
-                ViewData["CarouselImages"] = LoadCarouselImages();
-                ViewData["GalleryImages"] = LoadGalleryImages();
+                ViewData["CarouselImages"] = await _mediaHelper.LoadCarouselMediaAsync();
+                ViewData["GalleryImages"] = await _mediaHelper.LoadGalleryMediaAsync();
                 HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
                 HttpContext.Response.StatusCode = StatusCodes.Status200OK;
                 return View();
@@ -101,7 +104,7 @@ public class HomeController : Controller
             {
                 HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
                 HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-                return BadRequest();
+                return BadRequest(StaticUtils.BAD_REQUEST_MESSAGE(HttpContext.Request.Path.Value ?? "Invalid Method"));
             }
         }
         catch (Exception ex)
@@ -119,45 +122,33 @@ public class HomeController : Controller
         {
             if (HttpContext.Request.Path.HasValue &&
                 !string.IsNullOrEmpty(HttpContext.Request.Path.Value) &&
-                HttpContext.Request.Path.Value.Equals("/events"))
+                HttpContext.Request.Path.Value.Equals("/events") &&
+                HttpContext.Request.Method.Equals(HttpMethod.Get.Method))
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "events", "videos");
-
-                var videos = Directory.GetFiles(path).Select(file => Path.GetFileName(file)).ToArray();
-
-                ViewData["CarouselImages"] = LoadCarouselImages();
-
+                string[] videos = await _mediaHelper.LoadEventMediaAsync();
+                ViewData["CarouselImages"] = await _mediaHelper.LoadCarouselMediaAsync();
                 var events = await _eventService.GetEventsAsync();
-
                 var comments = await _commentSerivce.GetAllCommentsAsync();
 
-                HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
-
                 if (videos.Length > 0 && events.Any())
-                {
-                    ViewData["Videos"] = videos;
+                    ViewData["EventsMedia"] = videos;
 
+                if (events.Any())
                     ViewData["Events"] = events
                         .Where(ev => ev.Date.Year == DateTime.Now.Year && ev.Date >= DateOnly.FromDateTime(DateTime.Now))
                         .OrderBy(ev => ev.Date);
 
-                    ViewData["Comments"] = comments
-                        .OrderByDescending(c => c.Date)
-                        .ThenByDescending(c => c.Time);
+                if (comments.Any())
+                    ViewData["Comments"] = comments.OrderByDescending(c => c.Date).ThenByDescending(c => c.Time);
 
-                    HttpContext.Response.StatusCode = StatusCodes.Status200OK;
-                }
-                else
-                {
-                    HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
-                }
-
+                HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
+                HttpContext.Response.StatusCode = StatusCodes.Status200OK;
                 return View();
             }
 
             HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
             HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-            return BadRequest();
+            return BadRequest(StaticUtils.BAD_REQUEST_MESSAGE(HttpContext.Request.Path.Value ?? "Invalid Method"));
         }
         catch (Exception ex)
         {
@@ -165,6 +156,42 @@ public class HomeController : Controller
             HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
             return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
         }
+    }
+
+    [Route("terms-of-service")]
+    public async Task<IActionResult> TermsOfServiceAsync()
+    {
+        try
+        {
+            if (HttpContext.Request.Path.HasValue &&
+                !string.IsNullOrEmpty(HttpContext.Request.Path.Value) &&
+                HttpContext.Request.Path.Value.Equals("/terms-of-service") &&
+                HttpContext.Request.Method.Equals(HttpMethod.Get.Method))
+            {
+                ViewData["CarouselImages"] = await _mediaHelper.LoadCarouselMediaAsync();
+                HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
+                HttpContext.Response.StatusCode = StatusCodes.Status200OK;
+                return View();
+            }
+            else
+            {
+                HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
+                HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+                return BadRequest(StaticUtils.BAD_REQUEST_MESSAGE(HttpContext.Request.Path.Value ?? "Invalid Method"));
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while processing the gallery request.");
+            HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+        }
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
     [Route("comments")]
@@ -205,36 +232,5 @@ public class HomeController : Controller
         }
 
         return BadRequest("Invalid comment data.");
-    }
-
-    [Route("privacy")]
-    public IActionResult Privacy() => View();
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
-
-    private static string[] LoadGalleryImages()
-    {
-        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
-
-        var images = Directory.GetFiles(path)
-            .Select(file => Path.GetFileName(file))
-            .ToArray();
-
-        return images;
-    }
-
-    private static string[] LoadCarouselImages()
-    {
-        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
-
-        var images = Directory.GetFiles(path)
-            .Select(file => Path.GetFileName(file))
-            .ToArray();
-
-        return images;
     }
 }
