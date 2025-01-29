@@ -40,6 +40,11 @@ public class EventModel
     [Display(Name = "End Time")]
     public TimeSpan EndTime { get; set; }
 
+    [Required(ErrorMessage = "{0} is required")]
+    [Display(Name = "Fee")]
+    [Range(50, 10_000, ErrorMessage = "{0} must be between {1} and {2}")]
+    public decimal Fee { get; set; }
+
     // Navigation property for related comments
     public ICollection<CommentModel>? Comments { get; set; }
 }

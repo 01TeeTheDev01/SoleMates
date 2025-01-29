@@ -19,57 +19,77 @@ public class SoleMatesWAContext : DbContext
     {
         modelBuilder.Entity<EventModel>(entity =>
         {
-            entity.HasKey(e => e.Id); // Set Id as the primary key
+            entity
+                .HasKey(e => e.Id); // Set Id as the primary key
 
-            entity.Property(e => e.Title)
+            entity
+                .Property(e => e.Title)
                 .IsRequired()
                 .HasMaxLength(100);
 
-            entity.Property(e => e.Description)
+            entity
+                .Property(e => e.Description)
                 .IsRequired()
                 .HasMaxLength(500);
 
-            entity.Property(e => e.Date)
+            entity
+                .Property(e => e.Date)
                 .IsRequired();
 
-            entity.Property(e => e.Location)
+            entity
+                .Property(e => e.Location)
                 .IsRequired()
                 .HasMaxLength(200);
 
-            entity.Property(e => e.Venue)
+            entity
+                .Property(e => e.Venue)
                 .IsRequired()
                 .HasMaxLength(200);
 
-            entity.Property(e => e.StartTime)
+            entity
+                .Property(e => e.StartTime)
                 .IsRequired();
 
-            entity.Property(e => e.EndTime)
+            entity
+                .Property(e => e.EndTime)
                 .IsRequired();
 
-            entity.HasMany(e => e.Comments)
+            entity
+                .Property(e => e.Fee)
+                .IsRequired()
+                .HasPrecision(9, 2);
+
+            entity
+                .HasMany(e => e.Comments)
                 .WithOne(c => c.Event)
                 .HasForeignKey(c => c.EventId);
         });
 
         modelBuilder.Entity<CommentModel>(entity =>
         {
-            entity.HasKey(c => c.Id); // Set Id as the primary key
+            entity
+                .HasKey(c => c.Id); // Set Id as the primary key
 
-            entity.Property(c => c.Comment)
+            entity
+                .Property(c => c.Comment)
                 .IsRequired()
                 .HasMaxLength(1000);
 
-            entity.Property(c => c.User)
+            entity
+                .Property(c => c.User)
                 .IsRequired()
                 .HasMaxLength(100);
 
-            entity.Property(c => c.Date)
+            entity
+                .Property(c => c.Date)
                 .IsRequired();
 
-            entity.Property(c => c.Time)
+            entity
+                .Property(c => c.Time)
                 .IsRequired();
 
-            entity.Property(c => c.EventId)
+            entity
+                .Property(c => c.EventId)
                 .IsRequired();
         });
 
@@ -83,7 +103,8 @@ public class SoleMatesWAContext : DbContext
             Location = "Johannesburg",
             Venue = "Sandton Community Center",
             StartTime = new TimeSpan(10, 0, 0),
-            EndTime = new TimeSpan(12, 0, 0)
+            EndTime = new TimeSpan(12, 0, 0),
+            Fee = 100.00m
         },
             new EventModel
             {
@@ -94,7 +115,8 @@ public class SoleMatesWAContext : DbContext
                 Location = "Pretoria",
                 Venue = "Menlyn Park",
                 StartTime = new TimeSpan(11, 0, 0),
-                EndTime = new TimeSpan(14, 0, 0)
+                EndTime = new TimeSpan(14, 0, 0),
+                Fee = 50.00m
             },
             new EventModel
             {
@@ -105,7 +127,8 @@ public class SoleMatesWAContext : DbContext
                 Location = "Midrand",
                 Venue = "Mall of Africa",
                 StartTime = new TimeSpan(13, 0, 0),
-                EndTime = new TimeSpan(16, 0, 0)
+                EndTime = new TimeSpan(16, 0, 0),
+                Fee = 150.00m
             },
             new EventModel
             {
@@ -116,7 +139,8 @@ public class SoleMatesWAContext : DbContext
                 Location = "Johannesburg",
                 Venue = "Apartheid Museum",
                 StartTime = new TimeSpan(10, 0, 0),
-                EndTime = new TimeSpan(17, 0, 0)
+                EndTime = new TimeSpan(17, 0, 0),
+                Fee = 100.00m
             },
             new EventModel
             {
@@ -127,7 +151,8 @@ public class SoleMatesWAContext : DbContext
                 Location = "Soweto",
                 Venue = "Walter Sisulu Square",
                 StartTime = new TimeSpan(14, 0, 0),
-                EndTime = new TimeSpan(16, 0, 0)
+                EndTime = new TimeSpan(16, 0, 0),
+                Fee = 60.00m
             },
             new EventModel
             {
@@ -138,7 +163,8 @@ public class SoleMatesWAContext : DbContext
                 Location = "Johannesburg",
                 Venue = "Johannesburg Expo Centre",
                 StartTime = new TimeSpan(12, 0, 0),
-                EndTime = new TimeSpan(15, 0, 0)
+                EndTime = new TimeSpan(15, 0, 0),
+                Fee = 100.00m
             },
             new EventModel
             {
@@ -149,7 +175,8 @@ public class SoleMatesWAContext : DbContext
                 Location = "Pretoria",
                 Venue = "Union Buildings",
                 StartTime = new TimeSpan(10, 0, 0),
-                EndTime = new TimeSpan(13, 0, 0)
+                EndTime = new TimeSpan(13, 0, 0),
+                Fee = 0.00m
             },
             new EventModel
             {
@@ -160,7 +187,8 @@ public class SoleMatesWAContext : DbContext
                 Location = "Johannesburg",
                 Venue = "Sandton Community Center",
                 StartTime = new TimeSpan(10, 0, 0),
-                EndTime = new TimeSpan(12, 0, 0)
+                EndTime = new TimeSpan(12, 0, 0),
+                Fee = 100.00m
             },
             new EventModel
             {
@@ -171,7 +199,8 @@ public class SoleMatesWAContext : DbContext
                 Location = "Pretoria",
                 Venue = "Menlyn Park",
                 StartTime = new TimeSpan(11, 0, 0),
-                EndTime = new TimeSpan(14, 0, 0)
+                EndTime = new TimeSpan(14, 0, 0),
+                Fee = 50.00m
             },
             new EventModel
             {
@@ -182,7 +211,8 @@ public class SoleMatesWAContext : DbContext
                 Location = "Midrand",
                 Venue = "Mall of Africa",
                 StartTime = new TimeSpan(13, 0, 0),
-                EndTime = new TimeSpan(16, 0, 0)
+                EndTime = new TimeSpan(16, 0, 0),
+                Fee = 150.00m
             },
             new EventModel
             {
@@ -193,7 +223,8 @@ public class SoleMatesWAContext : DbContext
                 Location = "Johannesburg",
                 Venue = "Apartheid Museum",
                 StartTime = new TimeSpan(10, 0, 0),
-                EndTime = new TimeSpan(17, 0, 0)
+                EndTime = new TimeSpan(17, 0, 0),
+                Fee = 100.00m
             },
             new EventModel
             {
@@ -204,7 +235,8 @@ public class SoleMatesWAContext : DbContext
                 Location = "Soweto",
                 Venue = "Walter Sisulu Square",
                 StartTime = new TimeSpan(14, 0, 0),
-                EndTime = new TimeSpan(16, 0, 0)
+                EndTime = new TimeSpan(16, 0, 0),
+                Fee = 60.00m
             },
             new EventModel
             {
@@ -215,7 +247,8 @@ public class SoleMatesWAContext : DbContext
                 Location = "Johannesburg",
                 Venue = "Johannesburg Expo Centre",
                 StartTime = new TimeSpan(12, 0, 0),
-                EndTime = new TimeSpan(15, 0, 0)
+                EndTime = new TimeSpan(15, 0, 0),
+                Fee = 100.00m
             },
             new EventModel
             {
@@ -226,7 +259,8 @@ public class SoleMatesWAContext : DbContext
                 Location = "Pretoria",
                 Venue = "Union Buildings",
                 StartTime = new TimeSpan(10, 0, 0),
-                EndTime = new TimeSpan(13, 0, 0)
+                EndTime = new TimeSpan(13, 0, 0),
+                Fee = 0.00m
             },
             new EventModel
             {
@@ -237,7 +271,8 @@ public class SoleMatesWAContext : DbContext
                 Location = "Johannesburg",
                 Venue = "Sandton Community Center",
                 StartTime = new TimeSpan(10, 0, 0),
-                EndTime = new TimeSpan(12, 0, 0)
+                EndTime = new TimeSpan(12, 0, 0),
+                Fee = 100.00m
             }
         );
 

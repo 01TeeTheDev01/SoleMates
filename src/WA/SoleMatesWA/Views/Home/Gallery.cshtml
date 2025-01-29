@@ -5,10 +5,20 @@
 }
 
 <!-- Hero Section -->
-<section class="hero mb-5" style="background-image: url('~/images/alex-perez-9E7vEfAcMDw-unsplash.jpg'); background-size: cover; color: white; padding: 100px 0;">
+<section 
+    class="hero mb-5" 
+    style="background-image: url('~/images/alex-perez-9E7vEfAcMDw-unsplash.jpg'); background-size: cover; color: white; padding: 100px 0;">
     <div class="container text-center" style="color: #8D477C;">
-        <h1 class="fw-bold display-3 animated fadeInUp" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Captured Moments: A Showcase of Sneaker Stories</h1>
-        <p class="lead animated fadeInUp delay-1s text-white-50" style="text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);">Experience the art of sneaker culture through every frame. A celebration of passion, style, and stories.</p>
+        <h1 
+            class="fw-bold display-3 animated fadeInUp" 
+            style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
+            Captured Moments: A Showcase of Sneaker Stories
+        </h1>
+        <p 
+            class="lead animated fadeInUp delay-1s text-white-50" 
+            style="text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);">
+            Experience the art of sneaker culture through every frame. A celebration of passion, style, and stories.
+        </p>
     </div>
 </section>
 
@@ -18,22 +28,27 @@
     {
         <div class="col-lg-4 col-md-6 col-sm-12">
             <div class="card shadow-sm" style="background-color: transparent;">
-                <img src="~/images/@image"
+                <img src="~/images/@(image)"
                      class="card-img-top preview-image"
-                     alt="Gallery Image - @image"
+                     alt="Gallery Image"
                      style="height: 200px; object-fit: cover;"
                      data-bs-toggle="modal"
                      data-bs-target="#imagePreviewModal"
-                     data-src="/images/@image"
+                     data-src="/images/@(image)"
                      loading="lazy"
-                     aria-label="Click to view larger image of @image">
+                     aria-label="Click to view larger image">
             </div>
         </div>
     }
 </div>
 
 <!-- Modal for Image Preview -->
-<div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewModalLabel" aria-hidden="true">
+<div 
+    id="imagePreviewModal" 
+    class="modal fade" 
+    tabindex="-1" 
+    aria-labelledby="imagePreviewModalLabel" 
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-light text-white">
             <div class="modal-body p-0">
@@ -46,7 +61,13 @@
                     aria-label="Preview of selected image">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close preview">Close</button>
+                <button 
+                    type="button" 
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal" 
+                    aria-label="Close preview">
+                    Close
+                </button>
             </div>
         </div>
     </div>

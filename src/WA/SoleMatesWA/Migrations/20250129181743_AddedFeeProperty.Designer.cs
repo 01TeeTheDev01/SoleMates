@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SoleMatesWA.Data;
@@ -11,9 +12,11 @@ using SoleMatesWA.Data;
 namespace SoleMatesWA.Migrations
 {
     [DbContext(typeof(SoleMatesWAContext))]
-    partial class SoleMatesWAContextModelSnapshot : ModelSnapshot
+    [Migration("20250129181743_AddedFeeProperty")]
+    partial class AddedFeeProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

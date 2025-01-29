@@ -38,23 +38,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //Event preview
 function openEventPreview(element) {
+    try {
+        // Extract event details from data-* attributes
+        const currentEvent = {
+            Title: element.dataset.title,
+            Description: element.dataset.description,
+            Date: element.dataset.date,
+            Location: element.dataset.location,
+            Venue: element.dataset.venue,
+            StartTime: element.dataset.start,
+            EndTime: element.dataset.end,
+            Fee: element.dataset.fee
+        };
 
-    // Extract event details from data-* attributes
-    const currentEvent = {
-        Title: element.dataset.title,
-        Description: element.dataset.description,
-        Date: element.dataset.date,
-        Location: element.dataset.location,
-        Venue: element.dataset.venue,
-        StartTime: element.dataset.start,
-        EndTime: element.dataset.end,
-    };
+        let startHour = parseInt(currentEvent.StartTime.split(':')[0]);
+        let endHour = parseInt(currentEvent.EndTime.split(':')[0]); // Removed extra closing parenthesis
+        let totalTime = endHour - startHour;
 
-    // Populate the modal with event details
-    document.getElementById('eventModalLabel').textContent = currentEvent.Title;
-    document.getElementById('eventDescription').textContent = currentEvent.Description;
-    document.getElementById('eventDate').textContent = currentEvent.Date;
-    document.getElementById('eventLocation').textContent = currentEvent.Location;
-    document.getElementById('eventVenue').textContent = currentEvent.Venue;
-    document.getElementById('eventTime').textContent = `${currentEvent.StartTime} - ${currentEvent.EndTime}`;
+        // Populate the modal with event details
+        document.getElementById('eventModalLabel').textContent = currentEvent.Title;
+        document.getElementById('eventDescription').textContent = currentEvent.Description;
+        document.getElementById('eventDate').textContent = currentEvent.Date;
+        document.getElementById('eventLocation').textContent = currentEvent.Location;
+        document.getElementById('eventVenue').textContent = currentEvent.Venue;
+        document.getElementById('eventTime').textContent = `${currentEvent.StartTime} - ${currentEvent.EndTime} (${totalTime} hrs)`;
+        document.getElementById('eventFee').textContent = `${currentEvent.Fee}`;
+    } catch (e) {
+        alert(e)
+    }
 }
