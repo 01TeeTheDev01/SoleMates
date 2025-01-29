@@ -1,4 +1,46 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string[] images = ViewData["CarouselImages"] as string[] ?? new string[0];
+
+    string[] headings = new string[] {
+        "Sneaker Culture",
+        "The Sneaker Revolution",
+        "Walk in Style",
+        "Sole Power",
+        "Kickin' It Fresh",
+        "Lace Up & Shine",
+        "Step Up Your Game",
+        "Where Style Meets Sole",
+        "The Sneaker Story",
+        "SoleMates Unleashed",
+        "Elevate Your Kicks",
+        "Fresh Kicks, Fresh Start",
+        "The Sneaker Life",
+        "Love Your Sneakers",
+        "Sole Journey"
+    };
+
+    string[] caption = new string[] {
+        "The art of sneaker passion.",
+        "Every step tells a story.",
+        "Walk with confidence and style.",
+        "Where comfort meets creativity.",
+        "Sneakers that speak louder than words.",
+        "For the love of kicks, forever.",
+        "Revolutionize your sneaker game.",
+        "Your sneakers, your legacy.",
+        "Treat your sneakers like royalty.",
+        "Sneaker care that goes the extra mile.",
+        "Quality cleaning for premium kicks.",
+        "Clean sneakers, happy feet.",
+        "We bring your sneakers back to life.",
+        "Because your sneakers deserve the best.",
+        "The ultimate in sneaker restoration."
+    };
+
+    Random random = new Random();
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -41,7 +83,7 @@
             <div class="container d-flex justify-content-between align-items-center">
                 <!-- Logo -->
                 <a class="navbar-brand text-white fw-bold" asp-action="Index">
-                    <img src="~/images/logo.jpg" width="50px" height="50px" />
+                    <img src="~/images/logo.jpg" alt="Jane's Image" class="testimonial-img" role="img" aria-label="Jane's Image">
                 </a>
 
                 <!-- Hamburger Button for Mobile Screens -->
@@ -53,7 +95,7 @@
                 <div id="navbarNav" class="collapse navbar-collapse text-uppercase fw-bold justify-content-center">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-center" style="font-size: 1rem;"  asp-action="Events">
+                            <a class="nav-link text-center" style="font-size: 1rem;" asp-action="Events">
                                 <i class="fas fa-calendar"></i>
                                 Events
                             </a>
@@ -77,6 +119,50 @@
     </header>
 
     <div class="content-wrapper">
+        <!-- Image Carousel Section -->
+        <section id="image-carousel" class="carousel slide mt-0" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner">
+                @if (images.Length > 0)
+                {
+                    for (int index = 0; index < images.Length; index++)
+                    {
+                        if (index is 0)
+                        {
+                            <!-- Carousel Item 1 -->
+                            <div class="carousel-item active">
+                                <img src="~/images/@images[index]" class="d-block w-100 carousel-image" alt="Sneaker Image 1">
+                                <div class="carousel-caption d-none d-md-block text-light">
+                                    <div class="carousel-caption-overlay"></div>
+                                    <h5 style="font-weight:600; font-size:1.5rem; color:#8D477C;">@headings[random.Next(headings.Length)]</h5>
+                                    <p>@caption[random.Next(caption.Length)]</p>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <!-- Carousel Item -->
+                            <div class="carousel-item">
+                                <img src="~/images/@images[index]" class="d-block w-100 carousel-image" alt="Sneaker Image 1">
+                                <div class="carousel-caption d-none d-md-block text-light">
+                                    <div class="carousel-caption-overlay"></div>
+                                    <h5 style="font-weight:600; font-size:1.5rem; color:#8D477C;">@headings[random.Next(headings.Length)]</h5>
+                                    <p>@caption[random.Next(caption.Length)]</p>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#image-carousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#image-carousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </section>
         <div class="container">
             <main role="main" class="pb-3">
                 @RenderBody()
@@ -84,27 +170,28 @@
         </div>
     </div>
 
-    <footer >
-        <footer class="navbar-dark bg-dark" style="background-color: #8D477C; padding: 20px 0; text-align: center; font-size: 14px;" class="text-light">
+    <footer>
+        <footer class="navbar-dark bg-dark text-light" style="background-color: #8D477C; padding: 20px 0; text-align: center; font-size: 14px;" class="text-light">
             <div>
                 <p>&copy; 2025 SoleMates. All Rights Reserved.</p>
                 <p>
-                    <a asp-action="Privacy" class="text-light" asp-fragment="Test" style="text-decoration: none;">Terms of Service</a>
+                    <a asp-action="Privacy" class="text-light" asp-fragment="Test" style="text-decoration: none;" aria-label="View Terms of Service">Terms of Service</a>
                 </p>
             </div>
             <div>
-                <a href="https://facebook.com/solemates" style="text-decoration: none; margin-right: 10px;" target="_blank">
+                <a href="https://facebook.com/solemates" style="text-decoration: none; margin-right: 10px;" target="_blank" aria-label="Visit SoleMates Facebook page">
                     <i class="fab fa-facebook text-light" style="margin-right: 5px;"></i> <span class="text-light">Facebook</span>
                 </a>
-                <a href="https://twitter.com/solemates" style="text-decoration: none; margin-right: 10px;" target="_blank">
+                <a href="https://twitter.com/solemates" style="text-decoration: none; margin-right: 10px;" target="_blank" aria-label="Visit SoleMates Twitter page">
                     <i class="fab fa-twitter text-light" style="margin-right: 5px;"></i> <span class="text-light">Twitter</span>
                 </a>
-                <a href="https://instagram.com/solemates" style="text-decoration: none;" target="_blank">
+                <a href="https://instagram.com/solemates" style="text-decoration: none;" target="_blank" aria-label="Visit SoleMates Instagram page">
                     <i class="fab fa-instagram text-light" style="margin-right: 5px;"></i> <span class="text-light">Instagram</span>
                 </a>
             </div>
         </footer>
     </footer>
+
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/font-awesome/js/all.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

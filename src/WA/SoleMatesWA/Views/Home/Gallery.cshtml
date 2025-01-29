@@ -1,56 +1,35 @@
 ﻿@{
     ViewData["Title"] = "Gallery";
-    string[] images = ViewData["Images"] as string[] ?? new string[0];
+    
+    string[] galleryImages = ViewData["GalleryImages"] as string[] ?? new string[0];
 }
 
-<div class="container">
-    <!-- Image Viewer (Carousel) -->
-    <div id="imageViewer" class="carousel slide mb-5" data-bs-ride="carousel" aria-label="Image Carousel">
-        <div class="carousel-inner">
-            @for (int i = 0; i < images.Length; i++)
-            {
-                <div class="carousel-item @(i == 0 ? "active" : "")">
-                    <img src="~/images/@images[i]" class="d-block w-100" alt="Image @i" style="max-height: 500px; object-fit: cover;" loading="lazy">
-                </div>
-            }
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#imageViewer" data-bs-slide="prev" aria-label="Previous slide">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#imageViewer" data-bs-slide="next" aria-label="Next slide">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+<!-- Hero Section -->
+<section class="hero mb-5" style="background-image: url('~/images/alex-perez-9E7vEfAcMDw-unsplash.jpg'); background-size: cover; color: white; padding: 100px 0;">
+    <div class="container text-center" style="color: #8D477C;">
+        <h1 class="fw-bold display-3 animated fadeInUp" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Captured Moments: A Showcase of Sneaker Stories</h1>
+        <p class="lead animated fadeInUp delay-1s text-white-50" style="text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);">Experience the art of sneaker culture through every frame. A celebration of passion, style, and stories.</p>
     </div>
+</section>
 
-    <!-- Hero Section -->
-    <section class="hero mb-5" style="background-image: url('~/images/alex-perez-9E7vEfAcMDw-unsplash.jpg'); background-size: cover; color: white; padding: 100px 0;">
-        <div class="container text-center" style="color: #8D477C;">
-            <h1 class="fw-bold display-3 animated fadeInUp" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Captured Moments: A Showcase of Sneaker Stories</h1>
-            <p class="lead animated fadeInUp delay-1s text-white-50" style="text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);">Experience the art of sneaker culture through every frame. A celebration of passion, style, and stories.</p>
-        </div>
-    </section>
-
-    <!-- Image Grid -->
-    <div class="row g-3">
-        @foreach (var image in images)
-        {
-            <div class="col-6 col-md-3">
-                <div class="card  shadow-sm" style="background-color: transparent;">
-                    <img 
-                        src="~/images/@image" 
-                        class="card-img-top preview-image" 
-                        alt="Gallery Image" 
-                        style="height: 200px; object-fit: cover;" 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#imagePreviewModal" 
-                        data-src="/images/@image" 
-                        loading="lazy">
-                </div>
+<!-- Image Grid -->
+<div class="row g-3">
+    @foreach (var image in galleryImages)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card shadow-sm" style="background-color: transparent;">
+                <img src="~/images/@image"
+                     class="card-img-top preview-image"
+                     alt="Gallery Image - @image"
+                     style="height: 200px; object-fit: cover;"
+                     data-bs-toggle="modal"
+                     data-bs-target="#imagePreviewModal"
+                     data-src="/images/@image"
+                     loading="lazy"
+                     aria-label="Click to view larger image of @image">
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>
 
 <!-- Modal for Image Preview -->
@@ -58,17 +37,34 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-light text-white">
             <div class="modal-body p-0">
-                <img id="previewImage" src="" alt="Preview" class="w-100" style="object-fit: cover;">
-                
+                <img 
+                    id="previewImage" 
+                    src=""
+                    alt="Preview Image" 
+                    class="w-100" 
+                    style="object-fit: cover; height: 500px;" 
+                    aria-label="Preview of selected image">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close preview">Close</button>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    
-</script>
+<!-- Styles -->
+<style>
+    .card-hover:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    h2, h3, p {
+        font-weight: 400;
+    }
+</style>

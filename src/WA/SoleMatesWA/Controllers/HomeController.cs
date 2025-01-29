@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using SoleMatesWA.Models;
 using SoleMatesWA.Repository;
 
+using static System.Net.Mime.MediaTypeNames;
+
 namespace SoleMatesWA.Controllers;
 
 public class HomeController : Controller
@@ -22,8 +24,63 @@ public class HomeController : Controller
         _commentSerivce = commentRepository;
     }
 
+    [Route("/")]
+    public IActionResult Index()
+    {
+        try
+        {
+            if (HttpContext.Request.Path.HasValue &&
+                !string.IsNullOrEmpty(HttpContext.Request.Path.Value) &&
+                HttpContext.Request.Path.Value.Equals("/"))
+            {
+                ViewData["CarouselImages"] = LoadCarouselImages();
+                HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
+                HttpContext.Response.StatusCode = StatusCodes.Status200OK;
+                return View();
+            }
+            else
+            {
+                HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
+                HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+                return BadRequest();
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while processing the gallery request.");
+            HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+        }
+    }
+
     [Route("about")]
-    public IActionResult About() => View();
+    public IActionResult About()
+    {
+        try
+        {
+            if (HttpContext.Request.Path.HasValue &&
+                !string.IsNullOrEmpty(HttpContext.Request.Path.Value) &&
+                HttpContext.Request.Path.Value.Equals("/about"))
+            {
+                ViewData["CarouselImages"] = LoadCarouselImages();
+                HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
+                HttpContext.Response.StatusCode = StatusCodes.Status200OK;
+                return View();
+            }
+            else
+            {
+                HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
+                HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+                return BadRequest();
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while processing the gallery request.");
+            HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+        }
+    }
 
     [Route("gallery")]
     public IActionResult Gallery()
@@ -34,14 +91,8 @@ public class HomeController : Controller
                 !string.IsNullOrEmpty(HttpContext.Request.Path.Value) &&
                 HttpContext.Request.Path.Value.Equals("/gallery"))
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
-
-                var images = Directory.GetFiles(path)
-                    .Select(file => Path.GetFileName(file))
-                    .ToArray();
-
-                ViewData["Images"] = images;
-
+                ViewData["CarouselImages"] = LoadCarouselImages();
+                ViewData["GalleryImages"] = LoadGalleryImages();
                 HttpContext.Response.Headers.Append("Path", HttpContext.Request.Path.Value);
                 HttpContext.Response.StatusCode = StatusCodes.Status200OK;
                 return View();
@@ -70,9 +121,11 @@ public class HomeController : Controller
                 !string.IsNullOrEmpty(HttpContext.Request.Path.Value) &&
                 HttpContext.Request.Path.Value.Equals("/events"))
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos");
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "events", "videos");
 
                 var videos = Directory.GetFiles(path).Select(file => Path.GetFileName(file)).ToArray();
+
+                ViewData["CarouselImages"] = LoadCarouselImages();
 
                 var events = await _eventService.GetEventsAsync();
 
@@ -154,10 +207,6 @@ public class HomeController : Controller
         return BadRequest("Invalid comment data.");
     }
 
-
-    [Route("/")]
-    public IActionResult Index() => View();
-
     [Route("privacy")]
     public IActionResult Privacy() => View();
 
@@ -165,5 +214,27 @@ public class HomeController : Controller
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+
+    private static string[] LoadGalleryImages()
+    {
+        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+
+        var images = Directory.GetFiles(path)
+            .Select(file => Path.GetFileName(file))
+            .ToArray();
+
+        return images;
+    }
+
+    private static string[] LoadCarouselImages()
+    {
+        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+
+        var images = Directory.GetFiles(path)
+            .Select(file => Path.GetFileName(file))
+            .ToArray();
+
+        return images;
     }
 }

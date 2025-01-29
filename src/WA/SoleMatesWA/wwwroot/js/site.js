@@ -1,4 +1,18 @@
-﻿//Image preview in Gallery
+﻿// Define the threshold for small screens (e.g., 576px or smaller)
+const smallScreenWidth = 576;
+
+// Get the current viewport width
+const viewportWidth = window.innerWidth;
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if the screen width is small or equal to the threshold
+    if (viewportWidth <= smallScreenWidth) {
+        // Do something for small screens (e.g., show a message or adjust the layout)
+        alert("This site is best viewed on a laptop/desktop.");
+    }
+});
+
+//Image preview in Gallery
 document.addEventListener('DOMContentLoaded', () => {
     const previewModal = document.getElementById('imagePreviewModal');
     const previewImage = document.getElementById('previewImage');
@@ -33,9 +47,6 @@ function openEventPreview(element) {
         StartTime: element.dataset.start,
         EndTime: element.dataset.end,
     };
-
-    // Debug to ensure the object is correct
-    console.log(currentEvent.Title);
 
     // Populate the modal with event details
     document.getElementById('eventModalLabel').textContent = currentEvent.Title;
